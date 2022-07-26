@@ -1,4 +1,4 @@
-from tkinter import PhotoImage
+""""from tkinter import PhotoImage
 import tkinter as tk
 
 color = {"nero": "#272736", "orange": "#FF8700", "darkorange": "#FE6109"}
@@ -25,3 +25,25 @@ homeLabel = tk.Label(topFrame, text="PE", font="gray17", height=2, padx=20)
 homeLabel.pack(side="right")
 
 root.mainloop()
+"""
+
+
+from tkinter import filedialog
+
+#file=filedialog.askopenfilename()
+
+#dir=filedialog.askdirectory()
+
+from os import path
+file=filedialog.askopenfilename()
+
+
+
+
+
+
+
+
+
+
+

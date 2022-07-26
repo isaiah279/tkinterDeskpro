@@ -1,0 +1,27 @@
+<HomePage>:
+    orientation: 'vertical'
+    MDBoxLayout:
+        orientation: 'vertical'
+        md_bg_color: 0, .2, .9, .5
+        MDLabel:
+            text:"New app"
+            align:"center"
+
+
+        # App Bar
+        MDBoxLayout:
+            padding: '5dp'
+            adaptive_height: True
+
+            MDIconButton:
+                icon: 'plus'
+
+            MDLabel:
+                text: 'Instagram'
+                halign: 'center'
+                valign: 'top'
+                font_size: 25
+                #font_name: 'libs/assets/Instafont.otf'
+
+            MDIconButton:
+                icon: 'facebook-messenger'

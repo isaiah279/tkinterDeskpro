@@ -37,7 +37,8 @@ def submit():
         db.child("USER-ID").child(id).set(JSON)
 
         messagebox.showinfo("Information Submitted", "success")
-    except
+    except:
+        print("names")
 
 
 

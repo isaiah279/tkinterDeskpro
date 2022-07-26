@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import messagebox
+
 splash_root = Tk()
 
 splash_root.title("Splash screen")
@@ -17,11 +18,11 @@ def main_window():
     root.iconbitmap("")
     root.geometry("1200x800")
     mainlabel = Label(root, text="Main Screen In the Column circle ")
-    mainlabel.pack(pady=50,padx=30)
+    mainlabel.pack(pady=50, padx=30)
 
     # splashed screen timer
 
 
-splash_root.after(3000, main_window)
+splash_root.after(5000, main_window)
 
 mainloop()
