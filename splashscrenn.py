@@ -9,8 +9,6 @@ splash_root.geometry("1200x800")
 
 splash_label = Label(splash_root, text="Splaced Screen", font=46)
 splash_label.pack(pady=20)
-
-
 def main_window():
     splash_root.destroy()
     root = Tk()
@@ -23,6 +21,6 @@ def main_window():
     # splashed screen timer
 
 
-splash_root.after(5000, main_window)
+splash_root.after(2000, main_window)
 
 mainloop()

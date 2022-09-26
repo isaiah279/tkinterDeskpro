@@ -1,14 +1,15 @@
 from tkinter import ttk
 import tkinter as tk
 from tkintermapview import TkinterMapView
-from PIL import Image,ImageTk
-import  os
+from PIL import Image, ImageTk
+import os
 from tkinter import messagebox
 from PIL import Image, ImageTk
 # mysql connections
 import mysql.connector
 from mysql.connector import Error
 from tkinter import *
+
 try:
     from PIL import Image
 except ImportError:
@@ -19,8 +20,6 @@ import math
 import random
 import smtplib
 
-
-
 global locatingV
 global namet1
 global emailt2
@@ -29,7 +28,7 @@ global phonet3
 global locationt4
 
 global name
-global email
+global confirmPassword
 global issue
 global phone
 global location
@@ -58,13 +57,11 @@ def loginAdmin():
     T2 = tk.Entry(window, width=30, bd=0, show="*")
     T2.place(x=180, y=80)
 
-
     def verifying():
         if T1.get() == 'isaiah' and T2.get() == "12345":
             window.show_frame(FouthPage)
         else:
             messagebox.showinfo("Error", "provide correct details")
-
 
             messagebox.showinfo("Error ", "please provide correct user name")
 
@@ -74,158 +71,188 @@ def loginAdmin():
 
 class FirstPage(tk.Frame):
 
-
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
-        self.configure(bg="tomato")
-        emailAddress=StringVar()
-        password1=StringVar()
-        password2=StringVar()
+
 
         def submit(self):
             pass
 
-        bordering = tk.LabelFrame(self, text="Login", font=("Arial Bold", 20), bd=1, bg="Blue", fg="orange")
-        bordering.pack(fill="both", expand='yes', padx=150, pady=150)
 
-        L1 = tk.Label(bordering, text="User name", font=("Arial Bold", 15),bg='blue')
-        L1.place(x=50, y=20)
-
-        T1 = tk.Entry(bordering, width=30, bd=0)
-        T1.place(x=180, y=20)
-
-        L2 = tk.Label(bordering, text="Password", font=("Arial Bold", 15),bg='blue')
-        L2.place(x=50, y=80)
-
-        T2 = tk.Entry(bordering, width=30, bd=0, show="*")
-        T2.place(x=180, y=80)
-
-        def verify_user():
-            global  emailAddress
-            global  password1
-            global password2
-            emailAddress = StringVar()
-            password1 = StringVar()
-            password2 = StringVar()
-            email_verify=emailAddress.get()
-            password1_verify=password1.get()
-            password2_verify=password2.get()
-            os_list=os.listdir()
-            if email_verify in os_list:
-                file=open("userInfo.txt","r")
-                v=file.read().split()
-                if password1_verify in v:
-                    messagebox.showinfo("Success","Login Success")
-                else:
-                    messagebox.showinfo("not found","Wrong password used")
+        bordering = tk.LabelFrame(self, text="", font=("Arial Bold", 20), bd=1, fg="orange")
+        bordering.pack(fill="both", expand='yes')
+        bg = ImageTk.PhotoImage(
+            file='C:\\Users\\User\\Downloads\\depositphotos_24645511-stock-photo-nurse-making-notes-during-home.jpg')
+        # Create a Canvas
+        canvas = Canvas(width=700, height=3500)
+        canvas.pack(fill=BOTH, expand=True)
+        # Add Image inside the Canvas
+        canvas.create_image(0, 0, image=bg, anchor='nw')
+        def verify_login():
+            #file = open("usersInfo.txt", "r")
+            username_infoLogin = user_entry.get()
+            password_infoLogin = passwordEntry.get()
+            print(password_infoLogin)
+            print(username_infoLogin)
+            if username_infoLogin=="" and password_infoLogin=="":
+                messagebox.showerror("enter data","cant be empty")
+            elif username_infoLogin in open("newfile.txt").read():
+                messagebox.showinfo("sucess","Logged in")
+                Next = Button(bordering, text="press Next", command=lambda: controller.show_frame(FouthPage))
+                Next.place(x=500, y=200)
             else:
-                messagebox.showerror("error","You have not registered")
+                messagebox.showwarning("use doesn't exit ","sign up")
+        def login():
 
-            """if T1.get() == 'isaiah' and T2.get() == "12345":
-                controller.show_frame(SecondPage)
+            global screen2
+            screen2 = Tk()
+
+            screen2.geometry('500x200+400+150')
+            label = Label(screen2, text="Login Page", bg="skyblue", fg="black", padx=5, pady=5,
+                          font=("Algerian", 18))
+            label.place(x=220, y=2)
+            global user_verify
+            global password_verify
+            global user_entry
+            global passwordEntry
+
+            user_verify = StringVar()
+            password_verify = StringVar()
+            screen2.resizable(False,False)
+            screen2.geometry('550x350')
+            screen2.config(bg='skyblue')
+            screen2.title("Login Screen")
+            Label(text="Login").pack()
+            usernalabel = Label(screen2, text="User name",bg='SkyBlue',font=12)
+            usernalabel.place(x=50, y=80)
+
+            user_entry = Entry(screen2, textvariable=user_verify,width=30,font=12)
+            user_entry.place(x=150, y=80,height=25)
+
+            passwordLabel = Label(screen2, text="password",font=12,bg='SkyBlue')
+            passwordLabel.place(x=50, y=130)
+            passwordEntry = Entry(screen2, textvariable=password_verify,width=30,font=12,show="*")
+            passwordEntry.place(x=150, y=130)
+
+            login_btn = Button(screen2, text="Login", command=verify_login,height=1,width=15)
+            login_btn.place(x=150, y=180)
+
+
+
+
+        def register_user():
+            db=open('usersInfo.txt', 'r')
+            username_info = username_entry.get()
+            password_info = password_entry.get()
+            password2_info =password_entry2.get()
+            print(username_info)
+            print(password_info)
+            print(password2_info)
+            if username_info == '' or password_info == '' or password2_info == '':
+                messagebox.showwarning("fill the empty field!!!")
+            elif username_info in open("newfile.txt").read():
+                messagebox.showerror("data exits in the file")
+            elif password_info != password2_info:
+                    messagebox.showwarning("Passwprd not mach")
+                    register()
             else:
-                messagebox.showinfo("Error", "provide correct details")
-            """
+                # opening of file to store data
+                db= open("newfile.txt", "a")  # here a means append
+                username_info = username_entry.get()
+                password_info = password_entry.get()
+                password2_info = password_entry2.get()
+                db=open("newfile.txt","a")
+                db.write(username_info+","+password_info+","+password2_info+"\n")
+                messagebox.showinfo("success")
+            '''file=open('usersInfo.txt', 'a')
+            file.write(username_info+"\n")
+            file.write(password_info+"\n")
+            file.write(password2_info+"\n")'''
 
 
-        login_btn = tk.Button(bordering, text="Login", command=verify_user)
-        login_btn.place(x=180, y=130,width=70)
 
-        def otp_fuction():
-            pass
-        # register button
 
 
         def register():
 
-            window = tk.Tk()
-            window.title("Register")
-            #window.eval('tk::PlaceWindow.center')
-            window.geometry('+500+300')
-            window.configure(bg="deep sky blue")
-            window.resizable(0, 0)
+            global screen1
+            screen1 = Tk()
+            screen1.config(bg='SkyBlue')
+            screen1.geometry('500x200+400+150')
+            screen1.geometry('550x350')
+            screen1.resizable(False, False)
+            global username
+            global password
+            global password2
+            global username_entry
+            global password_entry
+            global password_entry2
 
-            username_label = tk.Label(window, text="Email Address", font=("Arial", 12), bg="deep sky blue")
-            username_label.place(x=10, y=10)
-            username_ent = tk.Entry(window, width=30,textvariable=emailAddress)
-            username_ent.place(x=150, y=10)
+            username = StringVar()
+            password = StringVar()
+            password2 = StringVar()
 
-            password_label = tk.Label(window, text="Password", font=("Arial", 12), bg="deep sky blue")
-            password_label.place(x=10, y=50)
-            password_ent = tk.Entry(window, text="Password", width=30, show="*",textvariable=password1)
-            password_ent.place(x=150, y=50)
-            password_conf_label = tk.Label(window, text="Confirm Password", font=("Arial", 12), bg="deep sky blue")
-            password_conf_label.place(x=10, y=100)
-            password_conf_ent = tk.Entry(window, width=30, show="*",textvariable=password2)
-            password_conf_ent.place(x=150, y=110)
-
-
-                #OTP generation
+            label = Label(screen1, text="Registration Page", bg="skyblue", fg="black", padx=5, pady=5,font=("Algerian", 18))
+            label.place(x=220,y=2)
 
 
 
+            userlab = Label(screen1, text="Username",bg='SkyBlue',font=12)
+            userlab.place(x=50, y=50+30)
+            username_entry = Entry(screen1, textvariable=username,width=30,font=12)
+            username_entry.place(x=200, y=50+30)
+            paswrdlab = Label(screen1, text="password",bg='SkyBlue',font=12)
+            paswrdlab.place(x=50, y=80+30)
+            password_entry = Entry(screen1, textvariable=password,width=30,font=12)
+            password_entry.place(x=200, y=80+30)
+            conflabel = Label(screen1, text="Confirm password",bg='SkyBlue',font=12)
+            conflabel.place(x=50, y=110+30)
+            password_entry2 = Entry(screen1, textvariable=password2,width=30,font=12)
+            password_entry2.place(x=200,y=110+30)
+            reg_userbtn = Button(screen1, text="register", height=1, width=15, command=register_user)
+            reg_userbtn.place(x=200, y=170+30)
 
-            def check():
-                emailget=emailAddress.get()
-                passwordget1=str(password1.get())
-                passwordget2 = str(password2.get())
+        # IMAGE INSERTED HERE
+        # Open the Image File
+        bg = ImageTk.PhotoImage(
+            file='C:\\Users\\User\\Downloads\\depositphotos_24645511-stock-photo-nurse-making-notes-during-home.jpg')
+        # Create a Canvas
+        canvas = Canvas(bordering, width=700, height=500)
+        canvas.pack(fill=BOTH, expand=True)
+        # Add Image inside the Canvas
+        canvas.create_image(0, 0, image=bg, anchor='nw')
 
-                file=open("userInfo.txt","w")
-                file.write(emailget)
-                file.write(passwordget1)
-                file.write(passwordget2)
-                file.close()
+        # Function to resize the window
+        def resize_image(e):
+            global image, resized, image2
+            # open image to resize it
+            image = Image.open(
+                'C:\\Users\\User\\Downloads\\depositphotos_24645511-stock-photo-nurse-making-notes-during-home.jpg')
+            # resize the image with width and height of root
+            resized = image.resize((e.width, e.height), Image.ANTIALIAS)
 
-                print("User registered successfully")
+            image2 = ImageTk.PhotoImage(resized)
+            canvas.create_image(0, 0, image=image2, anchor='nw')
 
-
-                """emailget=self.emailAddress.get()
-                passwordget1=self.password1.get()
-                passwordget2=self.password2.get()
-                s='\n'+  emailget + '\t' + passwordget1 + '\t ' + passwordget2
-                f=open(('regdetails.txt'),'a')
-                f.write(s)
-                f.close()"""
-
-                '''vals = (emailget, passwordget1,passwordget2)
-                mysqldb = mysql.connector.connect(host='localhost', database='basecare_db', user='root', password="")
-                mycursor = mysqldb.cursor()
-                if messagebox.askyesno("Confirm adding Data",
-                                       "Are you sure Your Want to add Customer to Database Customer"):
-                    query = "INSERT INTO registration (useremail,password1,password2 ) VALUES(%s,%s,%s)"
-
-                    if self.emailAddress == "" and self.password2 == "" and self.password1 == "" :
-                        messagebox.showwarning("You can't add Empty ")
-                        if '@' not in emailget and '.com' not in emailget:
-                            messagebox.showwarning("warning ", "enter valid Email  address")
-                    else:
-                        mycursor.execute(query, (emailget,passwordget1,passwordget2))
-                        try:
-                            mysqldb.commit()
-
-                            messagebox.showinfo("information", "Employee inserted successfully...")
-                        except:
-                            mysqldb.rollback()
-                        mysqldb.close()'''
-
-
-            #register()
-
-            b1 = tk.Button(window, text="Register now ", bg="orange", command=check)
-            b1.place(x=230, y=150)
-
-            window.geometry("470x220")
-
-        register_btn = tk.Button(bordering, text="Register",  bg="orange", command=register)
-        register_btn.place(x=300, y=130,width=70)
-
+        # Bind the function to configure the parent window
+        bordering.bind("<Configure>", resize_image)
+        #TITLE
+        headinhLabel=Label(bordering,text="Welcome to the Home Based Care Assiatance App \n Log in Or Signup For more Information",font=('Algerian',20),fg='Orange')
+        headinhLabel.place(x=300,y=0)
         Next_btn = tk.Button(self, text="Next", command=lambda: controller.show_frame(FouthPage))
         Next_btn.place(x=750, y=0)
-        finder = tk.Label(self, text="First Page")
-        finder.place(x=1250, y=0)
 
-#self.after(5000,FouthPage)
-#SecondPage.destroy()
+        login_btn = tk.Button(bordering, text="Login", command=login, font=('Algerian', 16))
+        login_btn.place(x=500, y=500, width=170, height=30)
+
+        register_btn = tk.Button(bordering, text="Register", bg="orange", command=register, font=('Algerian', 16))
+        register_btn.place(x=700, y=500, width=170, height=30)
+        # register button
+
+
+# self.after(5000,FouthPage)
+
+# SecondPage.destroy()
 
 
 class ThirdPage(tk.Frame):
@@ -237,18 +264,17 @@ class ThirdPage(tk.Frame):
         self.texting = tk.StringVar()
         self.email = tk.StringVar()
 
-        self.na = tk.Label(self,text="The commenting page of the System", font=('Helvetica', 26, 'bold'))
+        self.na = tk.Label(self, text="The commenting page of the System", font=('Helvetica', 26, 'bold'))
         self.na.pack(pady=20)
         self.wrapper1 = tk.LabelFrame(self, text="Write Comment", fg="White", bg="dark blue", font=('Arial', 14),
-                                      border=10)
+                                      border=5)
         self.wrapper1.pack(fill="both", expand="true", padx=0, pady=80, ipady=2)
-        textarea = tk.Text(self.wrapper1, width=25, height=15, font=20, fg="green")
+        textarea = tk.Text(self.wrapper1, width=25, height=10, font=20, fg="green")
         textarea.pack(ipady=50, ipadx=200, anchor='center', pady=20)
         self.lemail = tk.Label(self.wrapper1, text="Enter Your Email", bg='dark blue', font=20)
-        self.lemail.place(x=358, y=430)
+        self.lemail.place(x=358, y=350)
         email = tk.Entry(self.wrapper1, textvariable=self.email, width=20)
         email.pack(ipadx=50, ipady=10, anchor='center')
-
         def clear():
             textarea.delete(1.0, END)
             email.delete(0, END)
@@ -281,11 +307,11 @@ class ThirdPage(tk.Frame):
 
         # action buttons
         send_btn = tk.Button(self.wrapper1, text="send Comment", command=send_comment)
-        send_btn.place(x=350, y=500)
+        send_btn.place(x=350, y=400)
         clear_btn = tk.Button(self.wrapper1, text="Clear Comment", command=clear_btn)
-        clear_btn.place(x=500, y=500)
+        clear_btn.place(x=500, y=400)
         exit_btn = tk.Button(self.wrapper1, text="Exit page", command=exit_btn)
-        exit_btn.place(x=650, y=500)
+        exit_btn.place(x=650, y=400)
 
         Button = tk.Button(self, text="Home", font=("Arial", 15), bg='blue',
                            command=lambda: controller.show_frame(FirstPage))
@@ -335,7 +361,7 @@ class FouthPage(tk.Frame):
             phone = phonet3.get()
             location = locationt4.get()
             issue = issuet5.get()
-            global  mysqldb
+            global mysqldb
             global mycursor
             self.val = (name, email, phone, location, issue, name,)
             mysqldb = mysql.connector.connect(host='localhost', database='basecare_db', user='root', password="")
@@ -414,18 +440,18 @@ class FouthPage(tk.Frame):
         delete_btn.grid(row=4, column=2, pady=40, ipadx=20)
         cancel_btn.grid(row=4, column=3, pady=40, ipadx=20, padx=5)
 
-        Button = tk.Button(self, text="Comments", font=("Arial", 15), bg="dark blue",
-                           command=lambda: controller.show_frame(FirstPage))
-        Button.place(x=0, y=5)  # x=100, y=450
+        Button = tk.Button(self, text="Register", font=("Arial", 15), bg="dark blue",
+                           command=lambda: controller.show_frame(FirstPage), relief=FLAT, cursor='hand2')
+        Button.place(x=0, y=5, width=300, height=50)  # x=100, y=450
         '''Button = tk.Button(self, text="User Comments", font=("Arial", 15), bg="dark blue",
                            command=lambda: controller.show_frame(SecondPage))
         Button.place(x=120, y=5)'''
         Button = tk.Button(self, text="Comments", font=("Arial", 15), bg="dark blue",
-                           command=lambda: controller.show_frame(ThirdPage))
-        Button.place(x=240, y=5)
+                           command=lambda: controller.show_frame(ThirdPage), relief=FLAT, cursor='hand2')
+        Button.place(x=300, y=5, width=250, height=50)
         Button = tk.Button(self, text="Admin Page", font=("Arial", 15), bg="dark blue",
-                           command=lambda: controller.show_frame(AdminPage))
-        Button.place(x=360, y=5)
+                           command=lambda: controller.show_frame(AdminPage), relief=FLAT, cursor='hand2')
+        Button.place(x=500, y=5, width=250, height=50)
 
         finder = tk.Label(self, text="Fouth Page")
         finder.place(x=1250, y=0)
@@ -433,14 +459,11 @@ class FouthPage(tk.Frame):
 
 
 class AdminPage(tk.Frame):
-    #loginAdmin()
+    # loginAdmin()
     def __init__(self, parent, controller):
 
         tk.Frame.__init__(self, parent)
         self.configure(bg="blue")
-
-
-
 
         def locate_onmap():
 
@@ -511,8 +534,8 @@ class AdminPage(tk.Frame):
         # clear function
         def clear():
             pass
-            #t1=ent.delete(0,END)
-            #cname = ent1.delete(0, END)
+            # t1=ent.delete(0,END)
+            # cname = ent1.delete(0, END)
             '''cemail = ent2.delete(0, END)
             cphone = ent3.delete(0, END)
             clocation = ent4.delete(0, END)
@@ -541,17 +564,16 @@ class AdminPage(tk.Frame):
             location = t4.get()
             issue = t5.get()
             if messagebox.askyesno("Confirm Please ", 'Are you sure you want to Update'):
-                query =( "UPDATE\
+                query = ("UPDATE\
                  details_table SET name=%s,email=%s,phonenumber=%s,location=%s,issue=%s WHERE email=%s")
-                valuess=(name,email,phone,location,issue,email)
-                cursor.execute(query,valuess)
+                valuess = (name, email, phone, location, issue, email)
+                cursor.execute(query, valuess)
                 mydb.commit()
                 clear()
-                messagebox.showinfo("Success","updated successfully")
+                messagebox.showinfo("Success", "updated successfully")
             else:
 
-                messagebox.showerror("canceled","You cancelled Succefully")
-
+                messagebox.showerror("canceled", "You cancelled Succefully")
 
         def add_new():
             name = t1.get()
@@ -581,15 +603,14 @@ class AdminPage(tk.Frame):
 
             else:
                 return True
+
         def view_record():
             pass
-
-
 
         def delete_customer():
             email = t2.get()
             if messagebox.askyesno("Confirm Delete", "Are you sure you want to delete from this customer"):
-                query = "DELETE FROM details_table WHERE email =%s"+email
+                query = "DELETE FROM details_table WHERE email =%s" + email
                 cursor.execute(query)
                 mydb.commit()
                 clear()
@@ -600,14 +621,12 @@ class AdminPage(tk.Frame):
         mydb = mysql.connector.connect(host='localhost', database='basecare_db', user='root', password="")
         cursor = mydb.cursor()
 
-
         q = StringVar()
         t1 = StringVar()
         t2 = StringVar()
         t3 = StringVar()
         t4 = StringVar()
         t5 = StringVar()
-
 
         locatingV = tk.StringVar()
         # wrapper1 = LabelFrame(root, text="Customer List")
@@ -631,16 +650,15 @@ class AdminPage(tk.Frame):
         trv.column(2, minwidth=100, width=120)
         trv.heading(3, text="Phone")
         trv.column(3, minwidth=0, width=120)
-        trv.heading(4, text="Location")
+        trv.heading(4, text="Issue")
         trv.column(4, minwidth=0, width=120)
-        trv.heading(5, text='Issue')
+        trv.heading(5, text='Location')
         trv.column(5, minwidth=0, width=100)
-        #adding v scrollbar
-        treescroll=ttk.Scrollbar(trv)
+        # adding v scrollbar
+        treescroll = ttk.Scrollbar(trv)
         treescroll.configure(command=trv.yview)
         trv.configure(yscrollcommand=treescroll.set)
-        treescroll.place(x=570, y=50,height=300)
-
+        treescroll.place(x=570, y=50, height=300)
 
         trv.bind('<Double 1>', getrow)
         # querying
@@ -652,7 +670,6 @@ class AdminPage(tk.Frame):
 
         # search section
         # REMOVED IN THE PROGRAM
-
 
         # search sections
         lbl = Label(self, text='Search', bg='green', font=18)
@@ -698,7 +715,7 @@ class AdminPage(tk.Frame):
         ent_location = tk.Entry(self, textvariable=locatingV)
         ent_location.place(x=250, y=450, width=335, height=25)
         url_btn = tk.Button(self, text="Search Location", command=locate_onmap)
-        url_btn.place(x=150,y=450)
+        url_btn.place(x=150, y=450)
 
         update_btn = tk.Button(wrapper3, text="Update", command=update_customer)
         add_btn = tk.Button(wrapper3, text="Add New", command=add_new)
@@ -706,10 +723,10 @@ class AdminPage(tk.Frame):
         clear_btn = tk.Button(wrapper3, text="Clear", command=clear)
         viewrecord_btn = tk.Button(wrapper3, text="view", command=view_record)
 
-        add_btn.place(x=0, y=170,width=80)
-        update_btn.place(x=80, y=170,width=80)
-        delete_btn.place(x=160, y=170,width=80)
-        clear_btn.place(x=240, y=170,width=80)
+        add_btn.place(x=0, y=170, width=80)
+        update_btn.place(x=80, y=170, width=80)
+        delete_btn.place(x=160, y=170, width=80)
+        clear_btn.place(x=240, y=170, width=80)
         viewrecord_btn.place(x=320, y=170, width=80)
 
         #############
@@ -723,13 +740,13 @@ class AdminPage(tk.Frame):
         Button = tk.Button(self, text="User Comments", font=("Arial", 15), bg="dark blue",
                            command=lambda: controller.show_frame(ThirdPage))
         Button = tk.Button(self, text="User Page", font=("Arial", 15), bg="dark blue",
-                           command=lambda: controller.show_frame(FouthPage),width=100)
+                           command=lambda: controller.show_frame(FouthPage), width=100)
         Button.place(x=240, y=0)
         Button = tk.Button(self, text="Admin", font=("Arial", 15), bg="dark blue",
                            command=lambda: controller.show_frame(AdminPage))
-        Button.place(x=365, y=0,width=150)
+        Button.place(x=365, y=0, width=150)
         Button = tk.Button(self, text="login ", font=("Arial", 15), bg="dark blue",
-                           command=lambda: controller.show_frame(FirstPage))
+                           command=lambda: controller.show_frame(FirstPage), relief=FLAT)
         Button.place(x=480, y=0)
         from time import strftime
         def time():
@@ -738,7 +755,7 @@ class AdminPage(tk.Frame):
             label.after(1000, time)
 
         label = Label(self, font=("Algerian", 40), background="white", foreground="cyan")
-        label.place(x=1050,y=50)
+        label.place(x=1050, y=50)
         time()
 
         #   COMMENT SECTION AND TREEVIEW
@@ -771,8 +788,6 @@ class AdminPage(tk.Frame):
             ccomments = comment.delete(1.0, END)
             cemail = ent2.delete(0, END)
 
-
-
         def getrowComments(event):
             rowid = trvz.identify_row(event.y)
             item = trvz.item(trvz.focus())
@@ -791,8 +806,6 @@ class AdminPage(tk.Frame):
                 clearComments()
             else:
                 return True
-
-
 
         def add_newComments():
             comments = ent1.get(1.0, 'end')
@@ -824,14 +837,13 @@ class AdminPage(tk.Frame):
                 clearComments()
             else:
                 return True
+
         def view_comment():
             pass
-
 
         # frontend ::::::::::::::::::::::::::::::::::::::::::::
         mydb = mysql.connector.connect(host='localhost', database='basecare_db', user='root', password="")
         cursor = mydb.cursor()
-
 
         qc = StringVar()
         ent1 = StringVar()
@@ -871,13 +883,13 @@ class AdminPage(tk.Frame):
 
         lbl1 = Label(wrapper3, text="comments")
         lbl1.place(x=500, y=0)
-        comment = tk.Text(wrapper3, width=50, height=10,font=('Calibri',10))
+        comment = tk.Text(wrapper3, width=50, height=10, font=('Calibri', 10))
         comment.place(x=600, y=0)
 
         lbl2 = Label(wrapper3, text="Email")
         lbl2.place(x=1030, y=0)
         ent2 = Entry(wrapper3, textvariable=t8, width=40)
-        ent2.place(x=1070, y=0,height=30)
+        ent2.place(x=1070, y=0, height=30)
 
         update_btn = tk.Button(wrapper3, text="Updatec", command=update_customerComments)
         add_btn = tk.Button(wrapper3, text="Add Newc", command=add_newComments)
@@ -885,23 +897,19 @@ class AdminPage(tk.Frame):
         clear_btn = tk.Button(wrapper3, text="clearc", command=clearComments)
         viewcomment_btn = tk.Button(wrapper3, text="view", command=view_comment)
 
-
-
-        update_btn.place(x=600, y=170,width=80)
-        add_btn.place(x=680, y=170,width=80)
-        delete_btn.place(x=760, y=170,width=80)
-        clear_btn.place(x=840, y=170,width=80)
+        update_btn.place(x=600, y=170, width=80)
+        add_btn.place(x=680, y=170, width=80)
+        delete_btn.place(x=760, y=170, width=80)
+        clear_btn.place(x=840, y=170, width=80)
         viewcomment_btn.place(x=920, y=170, width=80)
 
         # adding scrollbar to text
 
-        v= tk.Scrollbar(wrapper3,orient='vertical')
+        v = tk.Scrollbar(wrapper3, orient='vertical')
 
-        v.place(x=1005,y=0,height=170)
+        v.place(x=1005, y=0, height=170)
         v.config(command=comment.yview)
         comment.config(yscrollcommand=v.set)
-
-
 
 
 class Application(tk.Tk):
@@ -914,7 +922,7 @@ class Application(tk.Tk):
         window.grid_columnconfigure(0, minsize=1365)
 
         self.frames = {}
-        for F in (FirstPage,AdminPage, ThirdPage, FouthPage):
+        for F in (FirstPage, AdminPage, ThirdPage, FouthPage):
             frame = F(window, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
