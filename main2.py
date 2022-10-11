@@ -72,6 +72,7 @@ class FirstPage(tk.Frame):
         def clearlog():
             useremail_entry.delete(0, END)
             passwordEntry.delete(0, END)
+
         def verify_login():
             # file = open("usersInfo.txt", "r")
             useremail_infoLogin = useremail_entry.get()
@@ -576,6 +577,67 @@ class FouthPage(tk.Frame):
         def cancel_information():
             clear()
 
+        def url_link():
+            # Begining OF THE LINK AREA LOCATION
+
+            driver = webdriver.Chrome(
+                "C:/Users/User/Downloads/chromedriver_win32/chromedriver.exe")
+            driver.get(f"https://www.google.com/maps/@0.1768696,37.9083264z")
+            sleep(2)
+
+            # xpath is stand for XML path language, uses path expression to identify and navigate nodes in an XML
+            # document can be use to select  one/more nodes in the document by using absolute / relative path
+
+            def searchplace():
+                Place = driver.find_element_by_class_name('tactile-searchbox-input')
+                Place.send_keys("Nakuru")
+                submit = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/button")
+                submit.click()
+
+            searchplace()
+
+            def direction():
+                sleep(10)
+                direction = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[8]/div/div[1]/div/div/div[4]/div[1]/button")
+                direction.click()
+
+            direction()
+
+            def find():
+                sleep(10)
+                find = driver.find_element_by_xpath(
+                    '/html/body/div[3]/div[9]/div[3]/div[1]/div[2]/div/div[3]/div[1]/div[1]/div[2]/div[1]/div/input')
+                find.send_keys("London")
+                search = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[3]/div[1]/div[2]/div/div[3]/div[1]/div[1]/div[2]/button[1]")
+                search.click()
+
+            find()
+
+            def distancetime():
+                sleep(8)
+                distance = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[8]/div/div[1]/div/div/div[4]/div[2]/div/div[1]/div[1]/div[2]/div")
+                print("Total Distance: ", distance.text)
+
+                car = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[8]/div/div[1]/div/div/div[4]/div[2]/div/div[1]/div[1]/div[1]/span[1]")
+                print("Time Take by Vehcile: ", car.text)
+
+                train = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[8]/div/div[1]/div/div/div[4]/div[1]/div/div[2]/div[1]/div")
+                print("Time Take by Train: ", train.text)
+
+                aroplane = driver.find_element_by_xpath(
+                    "/html/body/div[3]/div[9]/div[8]/div/div[1]/div/div/div[4]/div[3]/div/div[4]/div[1]/div/div[1]")
+                print("Time Take by Aroplane: ", aroplane.text)
+
+            distancetime()
+
+            # END OF THE LINK AREA LOCATION
+
         # phone, email, name, location, issue
         wrapper1 = tk.LabelFrame(self, text="Enter Details", bg="#E86850")
         wrapper2 = tk.LabelFrame(self, text="Actions Required")
@@ -584,17 +646,25 @@ class FouthPage(tk.Frame):
         wrapper1.pack(fill="both", expand='yes', pady=50)
 
         # actions
-        add_btn = tk.Button(wrapper1, text="Submit Request", command=add_information, bg="#E86850", width=15,font=12)
-        delete_btn = tk.Button(wrapper1, text="Clear", command=clear_information, bg="#E86850", width=15,font=12)
-        cancel_btn = tk.Button(wrapper1, text="Cancel", command=cancel_information, bg="#E86850", width=15,font=12)
+        add_btn = tk.Button(wrapper1, text="Submit Request", command=add_information, bg="Green", font=12)
+        delete_btn = tk.Button(wrapper1, text="Clear", width=12, command=clear_information, bg="orange", font=12)
+        cancel_btn = tk.Button(wrapper1, text="Cancel", command=cancel_information, bg="yellow", font=12)
+
+        link_btn = tk.Button(wrapper1, text="Your url", command=url_link, bg="#E86850", font=12)
+
+        add_btn.place(x=100, y=350 - 30, height=35)
+        # grid(row=4, column=1, ipady=5, ipadx=20)
+        delete_btn.place(x=300 - 20, y=350 - 30, height=35)
+        link_btn.grid(row=3, column=4, ipady=5, ipadx=20)
+        cancel_btn.grid(row=4, column=4, ipady=5, ipadx=20)
 
         # labels
-        lname = tk.Label(wrapper1, text="Name:", bg='#E86850',font=11)
-        lemail = tk.Label(wrapper1, text="Email:", bg='#E86850',font=11)
-        lphone = tk.Label(wrapper1, text="Phone:", bg='#E86850',font=11)
-        lissue = tk.Label(wrapper1, text="Issue:", bg='#E86850',font=11)
-        llocation = tk.Label(wrapper1, text="Location", bg='#E86850',font=11)
-        id_number = tk.Label(wrapper1, text="Location", bg='#E86850',font=11)
+        lname = tk.Label(wrapper1, text="Name:", bg='#E86850', font=11)
+        lemail = tk.Label(wrapper1, text="Email:", bg='#E86850', font=11)
+        lphone = tk.Label(wrapper1, text="Phone:", bg='#E86850', font=11)
+        lissue = tk.Label(wrapper1, text="Issue:", bg='#E86850', font=11)
+        llocation = tk.Label(wrapper1, text="Location", bg='#E86850', font=11)
+        id_number = tk.Label(wrapper1, text="Location", bg='#E86850', font=11)
 
         # grids
 
@@ -605,21 +675,17 @@ class FouthPage(tk.Frame):
         lissue.grid(row=3, column=0, padx=20, pady=40)
 
         # Setting variable into the entry points
-        ename = tk.Entry(wrapper1, textvariable=namet1,font=11)
-        eemail = tk.Entry(wrapper1, textvariable=emailt2,font=11)
-        ephone = tk.Entry(wrapper1, textvariable=phonet3,font=11)
-        elocation = tk.Entry(wrapper1, textvariable=locationt4,font=11)
-        eissue = tk.Entry(wrapper1, textvariable=issuet5,font=11)
+        ename = tk.Entry(wrapper1, textvariable=namet1, font=11)
+        eemail = tk.Entry(wrapper1, textvariable=emailt2, font=11)
+        ephone = tk.Entry(wrapper1, textvariable=phonet3, font=11)
+        elocation = tk.Entry(wrapper1, textvariable=locationt4, font=11)
+        eissue = tk.Entry(wrapper1, textvariable=issuet5, font=11)
 
         ename.grid(row=1, column=1, ipady=5, ipadx=60)
         eemail.grid(row=2, column=1, ipady=5, ipadx=60)
         ephone.grid(row=1, column=4, ipady=5, ipadx=60)
         eissue.grid(row=2, column=4, ipady=5, ipadx=60)
         elocation.grid(row=3, column=1, ipady=5, ipadx=60)
-
-        add_btn.grid(row=4, column=0, pady=40, ipadx=20,padx=40+40)
-        delete_btn.grid(row=4, column=1, pady=40, ipadx=30,padx=40)
-        cancel_btn.grid(row=4, column=2, pady=40, ipadx=30,padx=20)
 
         Button = tk.Button(self, text="Register", font=("Arial", 15), bg="dark blue",
                            command=lambda: controller.show_frame(FirstPage), relief=FLAT, cursor='hand2')
@@ -696,9 +762,9 @@ class AdminPage(tk.Frame):
 
         def browsing():
             global root21
-            locating=ent_location.get()
-            dd=print(locating)
-            root21=Tk()
+            locating = ent_location.get()
+            dd = print(locating)
+            root21 = Tk()
             map_widget = TkinterMapView(root21, width=500, height=300, corner_radius=0)
             map_widget.pack(fill="both", expand=True)
 
@@ -723,7 +789,7 @@ class AdminPage(tk.Frame):
 
             def searchplace():
                 Place = driver.find_element_by_class_name('tactile-searchbox-input')
-                Place.send_keys(locating)
+                Place.send_keys('locating')
                 submit = driver.find_element_by_xpath(
                     "/html/body/div[3]/div[9]/div[3]/div[1]/div[1]/div[1]/div[2]/div[1]/button")
                 submit.click()
@@ -776,8 +842,6 @@ class AdminPage(tk.Frame):
             map_widget.set_tile_server("https://mt0.google.com/vt/lyrs=m&hl=en&x={x}&y={y}&z={z}&s=Ga", max_zoom=80)
 
             map_widget.set_address(locating, marker=True)'''
-
-
 
         connection = mysql.connector.connect(host='localhost',
                                              database='basecare_db',
@@ -848,6 +912,7 @@ class AdminPage(tk.Frame):
             t3.set(item['values'][2])
             t4.set(item['values'][3])
             t5.set(item['values'][4])
+
         def update_customer():
             name = t1.get()
             email = t2.get()
@@ -906,7 +971,7 @@ class AdminPage(tk.Frame):
                 cursor.execute(query, val)
                 clearind_inAdminaerea()
                 mydb.commit()
-                messagebox.showinfo("success", "You have deleted the comment successfully")
+                messagebox.showinfo("success", "You have deleted the Detail successfully")
 
             else:
                 return True
@@ -1198,7 +1263,7 @@ class Application(tk.Tk):
         window.grid_rowconfigure(0, minsize=750)
         window.grid_columnconfigure(0, minsize=1365)
         self.frames = {}
-        for F in ( AdminPage,FirstPage, ThirdPage, FouthPage,):
+        for F in (AdminPage, FirstPage, ThirdPage, FouthPage,):
             frame = F(window, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
