@@ -1263,7 +1263,7 @@ class Application(tk.Tk):
         window.grid_rowconfigure(0, minsize=750)
         window.grid_columnconfigure(0, minsize=1365)
         self.frames = {}
-        for F in ( FirstPage, ThirdPage, FouthPage,AdminPage,):
+        for F in (          pages          ):
             frame = F(window, self)
             self.frames[F] = frame
             frame.grid(row=0, column=0, sticky="nsew")
